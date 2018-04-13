@@ -101,7 +101,7 @@ class MainWindow(QDialog):
         self.__lastSelectedCategory = ""
         self.__ui.closeButton.clicked.connect(self.close)
     
-    def __tr(self):
+    def __tr(self, str):
         return QCoreApplication.translate("MainWindow", str)
 
     def closeEvent(self,  event):
@@ -431,7 +431,7 @@ class IniEdit(mobase.IPluginTool):
     def setParentWidget(self, widget):
         self.__parentWidget = widget
     
-    def __tr(self):
+    def __tr(self, str):
         return QCoreApplication.translate("IniEdit", str)
 
     def __iniFiles(self):
@@ -504,7 +504,7 @@ class IniEdit(mobase.IPluginTool):
                 if "both" not in settings[section][setting[0]].get("flags", [])\
                         and fileName.lower() != settings[section][setting[0]]["file"].lower():
                     QtCore.qDebug(__tr("{0} in wrong ini file ({1}, should be {2}))").format(
-                        str(setting[0]), fileName, settings[section][setting[0]]["file"])
+                        str(setting[0]), fileName, settings[section][setting[0]]["file"]))
                     continue
 
                 newData = settings[section].get(setting[0],  {})

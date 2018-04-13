@@ -100,6 +100,9 @@ class MainWindow(QDialog):
 
         self.__lastSelectedCategory = ""
         self.__ui.closeButton.clicked.connect(self.close)
+    
+    def __tr(self):
+        return QCoreApplication.translate("MainWindow", str)
 
     def closeEvent(self,  event):
         if self.__ui.saveButton.isEnabled():
@@ -427,6 +430,9 @@ class IniEdit(mobase.IPluginTool):
 
     def setParentWidget(self, widget):
         self.__parentWidget = widget
+    
+    def __tr(self):
+        return QCoreApplication.translate("IniEdit", str)
 
     def __iniFiles(self):
         gameName = self.__organizer.managedGame().gameShortName().lower()

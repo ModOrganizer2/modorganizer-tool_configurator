@@ -349,9 +349,9 @@ class MainWindow(QDialog):
             newItem = self.__addSetting(settingKey,  setting)
             self.__updateIcon(newItem)
             if "description" in setting:
-                newItem.setToolTip(0, str(setting["description"]))
+                newItem.setToolTip(0, str(this.__tr(setting["description"])))
             if "default" in setting:
-                newItem.setToolTip(1, "Default: " + str(setting["default"]))
+                newItem.setToolTip(1, this.__tr("Default: ") + str(setting["default"]))
             self.__ui.settingsTree.addTopLevelItem(newItem)
 
         self.__ui.settingsTree.resizeColumnToContents(0)
@@ -490,7 +490,7 @@ class IniEdit(mobase.IPluginTool):
         parser.readfp(cfgFile)
         for section in parser.sections():
             if section not in settings:
-                QtCore.qDebug(self.__tr("unexpected section {0} in {1}").format(section, fileName))
+                QtCore.qDebug(self.__tr("unexpected section {0} in {1}").format(section, fileName).encode('ascii','ignore'))
                 continue
             else:
                 settings.updateKey(section)
@@ -498,13 +498,13 @@ class IniEdit(mobase.IPluginTool):
             for setting in parser.items(section, True):
                 # test if the setting is allowed in this file
                 if setting[0].lower() not in settings[section]:
-                    QtCore.qDebug(self.__tr("unknown ini setting {0}").format(str(setting[0])))
+                    QtCore.qDebug(self.__tr("unknown ini setting {0}").format(setting[0]).encode('ascii','ignore'))
                     continue
 
                 if "both" not in settings[section][setting[0]].get("flags", [])\
                         and fileName.lower() != settings[section][setting[0]]["file"].lower():
                     QtCore.qDebug(self.__tr("{0} in wrong ini file ({1}, should be {2})").format(
-                        str(setting[0]), fileName, settings[section][setting[0]]["file"]))
+                        setting[0], fileName, settings[section][setting[0]]["file"]).encode('ascii','ignore'))
                     continue
 
                 newData = settings[section].get(setting[0],  {})
@@ -521,7 +521,7 @@ class IniEdit(mobase.IPluginTool):
                             value = float(int(value))
                 except ValueError, e:
                     QMessageBox.warning(self.__window,  self.__tr("Invalid configuration file"),
-                                    self.__tr("Your configuration files contains an invalid value: {0}={1} (in section {2}).\n").format(str(setting[0]), str(setting[1]), section)
+                                    self.__tr("Your configuration files contains an invalid value: {0}={1} (in section {2}).\n").format(QString(setting[0]), QString(setting[1]), section)
                                     + self.__tr("Please note that the game probably won't report an error, it will just ignore this setting.\n")
                                     + self.__tr("Please note that even if someone told you to use this setting, that doesn't mean they know what they're talking about.\n")
                                     + self.__tr("BUT, if you know for a fact this is a valid setting, then please contact me at sherb@gmx.net."))

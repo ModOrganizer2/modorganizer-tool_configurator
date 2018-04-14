@@ -112,6 +112,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="pyCfgDialog.ui" line="82"/>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pyCfgDialog.ui" line="87"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="pyCfgDialog.ui" line="113"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
@@ -119,6 +129,14 @@
     <message>
         <location filename="pyCfgDialog.ui" line="120"/>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>this</name>
+    <message>
+        <location filename="pyCfg.py" line="355"/>
+        <source>Default: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

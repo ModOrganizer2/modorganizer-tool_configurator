@@ -79,12 +79,12 @@
      </attribute>
      <column>
       <property name="text">
-       <string notr="true">Key</string>
+       <string>Key</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string notr="true">Value</string>
+       <string>Value</string>
       </property>
      </column>
     </widget>

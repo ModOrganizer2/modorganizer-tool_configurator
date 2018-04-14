@@ -98,6 +98,11 @@
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="pyCfg.py" line="355"/>
+        <source>Default: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PyCfgDialog</name>
@@ -129,14 +134,6 @@
     <message>
         <location filename="pyCfgDialog.ui" line="120"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>this</name>
-    <message>
-        <location filename="pyCfg.py" line="355"/>
-        <source>Default: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

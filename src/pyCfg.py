@@ -349,9 +349,9 @@ class MainWindow(QDialog):
             newItem = self.__addSetting(settingKey,  setting)
             self.__updateIcon(newItem)
             if "description" in setting:
-                newItem.setToolTip(0, str(this.__tr(setting["description"])))
+                newItem.setToolTip(0, str(self.__tr(setting["description"])))
             if "default" in setting:
-                newItem.setToolTip(1, this.__tr("Default: ") + str(setting["default"]))
+                newItem.setToolTip(1, self.__tr("Default: ") + str(setting["default"]))
             self.__ui.settingsTree.addTopLevelItem(newItem)
 
         self.__ui.settingsTree.resizeColumnToContents(0)

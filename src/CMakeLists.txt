@@ -2,7 +2,8 @@ CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
 
 FIND_PACKAGE(Qt5Widgets REQUIRED)
 FIND_PACKAGE(Qt5LinguistTools)
-QT5_CREATE_TRANSLATION(configurator_translations_qm ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/configurator_en.ts)
+INCLUDE(PyQt5TranslationMacros.cmake)
+PYQT5_CREATE_TRANSLATION(configurator_translations_qm ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/configurator_en.ts)
 
 SET(default_project_path "${CMAKE_SOURCE_DIR}/..")
 GET_FILENAME_COMPONENT(${default_project_path} ${default_project_path} REALPATH)

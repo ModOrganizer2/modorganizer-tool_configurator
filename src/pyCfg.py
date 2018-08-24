@@ -57,24 +57,24 @@ pair as the key's value (values become dictionaries)."""
             return False
 
     def items(self):
-        return [(v['key'], v['val']) for v in dict.itervalues(self)]
+        return [(v['key'], v['val']) for v in iter(dict.values(self))]
 
     def keys(self):
-        return [v['key'] for v in dict.itervalues(self)]
+        return [v['key'] for v in iter(dict.values(self))]
 
     def values(self):
-        return [v['val'] for v in dict.itervalues(self)]
+        return [v['val'] for v in iter(dict.values(self))]
 
     def iteritems(self):
-        for v in dict.itervalues(self):
+        for v in iter(dict.values(self)):
             yield v['key'], v['val']
 
     def iterkeys(self):
-        for v in dict.itervalues(self):
+        for v in iter(dict.values(self)):
             yield v['key']
 
     def itervalues(self):
-        for v in dict.itervalues(self):
+        for v in iter(dict.values(self)):
             yield v['val']
 
 
@@ -360,26 +360,6 @@ class MainWindow(QDialog):
         self.__updateTree()
 
 
-class MagicFile(file):
-    def __init__(self, filename, mode):
-        super(MagicFile, self).__init__(filename, mode)
-
-    def readline(self, size=-1):
-        temp = super(MagicFile, self).readline(size)
-        if len(temp) == 0:
-            return temp
-
-        esidx = temp.find('=')
-        # comment
-        if temp[0] == ';' or temp[0] == '#' or temp[0] == '[':
-            return temp
-        # no equals sign
-        if esidx == -1:
-            return "  " + temp
-        else:
-            return temp
-
-
 class IniEdit(mobase.IPluginTool):
 
     def __init__(self):
@@ -474,7 +454,7 @@ class IniEdit(mobase.IPluginTool):
         return newSettings
 
     def updateSettings(self, settings, fileName):
-        parser = configparser.SafeConfigParser(allow_no_value=True)
+        parser = configparser.ConfigParser(allow_no_value=True)
         parser.optionxform = str
 
         profile = self.__organizer.profile()
@@ -486,8 +466,7 @@ class IniEdit(mobase.IPluginTool):
         filePath = base_path + "/" + fileName
         if not os.path.exists(filePath):
             return
-        cfgFile = MagicFile(filePath, 'r')
-        parser.readfp(cfgFile)
+        parser.read(filePath)
         for section in parser.sections():
             if section not in settings:
                 QtCore.qDebug(self.__tr("unexpected section {0} in {1}").format(section, fileName).encode('ascii','ignore'))
@@ -532,7 +511,6 @@ class IniEdit(mobase.IPluginTool):
                 if "default" not in newData:
                     newData["default"] = value
                 settings[section][str(setting[0])] = newData
-        cfgFile.close()
 
     def __save(self,  settings):
         try:
@@ -547,12 +525,10 @@ class IniEdit(mobase.IPluginTool):
             for fileName in self.__iniFiles():
                 filePath = base_path + "/" + fileName
                 if os.path.exists(filePath):
-                    parser = configparser.SafeConfigParser(allow_no_value=True)
+                    parser = configparser.ConfigParser(allow_no_value=True)
                     parser.optionxform = str
-                    cfgFile = MagicFile(filePath, 'r')
-                    parser.readfp(cfgFile)
+                    parser.read(filePath)
                     ini_files[fileName] = parser
-                    cfgFile.close()
             count = 0
             for sectionkey, section in settings.items():
                 count += 1

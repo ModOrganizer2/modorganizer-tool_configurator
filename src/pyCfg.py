@@ -391,7 +391,7 @@ class IniEdit(mobase.IPluginTool):
         return self.__tr("Plugin to allow easier customization of game settings")
 
     def version(self):
-        return mobase.VersionInfo(1, 0, 0, mobase.ReleaseType.final)
+        return mobase.VersionInfo(1, 1, 0, 0)
 
     def isActive(self):
         return True

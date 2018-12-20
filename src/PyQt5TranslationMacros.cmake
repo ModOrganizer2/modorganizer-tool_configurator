@@ -79,7 +79,7 @@ function(PYQT5_CREATE_TRANSLATION _qm_files)
         add_custom_command(OUTPUT ${_ts_file}
             COMMAND ${PYTHON_ROOT}/pylupdate5.bat
             ARGS ${_lupdate_options} ${_lst_file_srcs} -ts ${_ts_file}
-            DEPENDS ${_my_sources} ${_ts_lst_file}
+            DEPENDS ${_lst_file_srcs} ${_ts_lst_file}
             WORKING_DIRECTORY ${PYTHON_ROOT}
             VERBATIM)
     endforeach()

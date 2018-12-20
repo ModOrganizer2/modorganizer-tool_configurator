@@ -1,7 +1,7 @@
 import os
 import sys
 import json
-import ConfigParser
+import configparser
 
 # qt5
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -15,33 +15,33 @@ if "mobase" not in sys.modules:
 
 
 class CaselessDict(dict):
-    """Dictionary that enables case insensitive searching while preserving case sensitivity 
-when keys are listed, ie, via keys() or items() methods. 
- 
-Works by storing a lowercase version of the key as the new key and stores the original key-value 
+    """Dictionary that enables case insensitive searching while preserving case sensitivity
+when keys are listed, ie, via keys() or items() methods.
+
+Works by storing a lowercase version of the key as the new key and stores the original key-value
 pair as the key's value (values become dictionaries)."""
- 
+
     def __init__(self, initval=dict()):
         super(CaselessDict, self).__init__(initval)
         if isinstance(initval, dict):
-            for key, value in initval.iteritems():
+            for key, value in initval.items():
                 self.__setitem__(key, value)
         elif isinstance(initval, list):
             for (key, value) in initval:
                 self.__setitem__(key, value)
-            
+
     def __contains__(self, key):
         return dict.__contains__(self, key.lower())
-  
+
     def __getitem__(self, key):
-        return dict.__getitem__(self, key.lower())['val'] 
-  
+        return dict.__getitem__(self, key.lower())['val']
+
     def __setitem__(self, key, value):
         return dict.__setitem__(self, key.lower(), {'key': key, 'val': value})
- 
+
     def updateKey(self,  key):
         dict.__getitem__(self,  key.lower())['key'] = key
- 
+
     def get(self, key, default=None):
         try:
             v = dict.__getitem__(self, key.lower())
@@ -49,32 +49,32 @@ pair as the key's value (values become dictionaries)."""
             return default
         else:
             return v['val']
- 
+
     def has_key(self, key):
         if self.get(key):
             return True
         else:
-            return False    
- 
+            return False
+
     def items(self):
-        return [(v['key'], v['val']) for v in dict.itervalues(self)]
-    
+        return [(v['key'], v['val']) for v in iter(dict.values(self))]
+
     def keys(self):
-        return [v['key'] for v in dict.itervalues(self)]
-    
+        return [v['key'] for v in iter(dict.values(self))]
+
     def values(self):
-        return [v['val'] for v in dict.itervalues(self)]
-    
+        return [v['val'] for v in iter(dict.values(self))]
+
     def iteritems(self):
-        for v in dict.itervalues(self):
+        for v in iter(dict.values(self)):
             yield v['key'], v['val']
-        
+
     def iterkeys(self):
-        for v in dict.itervalues(self):
+        for v in iter(dict.values(self)):
             yield v['key']
-        
+
     def itervalues(self):
-        for v in dict.itervalues(self):
+        for v in iter(dict.values(self)):
             yield v['val']
 
 
@@ -153,7 +153,7 @@ class MainWindow(QDialog):
     def __valueChangedIndex(self,  value):
         # odd problem: can't connect to the slot with text-parameter
         self.__valueChanged(self.sender(),  str(self.sender().itemText(value)))
-    
+
     def __sliderChanged(self,  value):
         self.__valueChanged(self.sender(),  value)
 
@@ -161,10 +161,10 @@ class MainWindow(QDialog):
         self.__ui.categorySelection.clear()
         self.__ui.categorySelection.addItem("")
         advanced = self.__ui.advancedButton.isChecked()
-        for cat in self.__settings.keys():
+        for cat in list(self.__settings.keys()):
             display = advanced
             if not display:
-                for setting in self.__settings[cat].values():
+                for setting in list(self.__settings[cat].values()):
                     if "basic" in setting.get("flags",  []):
                         display = True
                         continue
@@ -263,7 +263,7 @@ class MainWindow(QDialog):
             newWidget = self.__genSlider(setting["range"],  setting.get("step",  1),  str(key),  setting["value"])
         else:
             newWidget = QSpinBox(self.__ui.settingsTree)
-            newWidget.setRange(-sys.maxint,  sys.maxint)
+            newWidget.setRange(-sys.maxsize,  sys.maxsize)
             newWidget.setSingleStep(setting.get("step",  1))
             newWidget.setProperty("key",  key)
             newWidget.setValue(setting["value"])
@@ -277,7 +277,7 @@ class MainWindow(QDialog):
             newWidget = self.__genSlider(setting["range"],  setting.get("step",  1),  key,  setting["value"])
         else:
             newWidget = QSpinBox(self.__ui.settingsTree)
-            newWidget.setRange(0,   sys.maxint)
+            newWidget.setRange(0,   sys.maxsize)
             newWidget.setSingleStep(setting.get("step",  1))
             newWidget.setProperty("key",  key)
             newWidget.setValue(setting["value"])
@@ -340,7 +340,7 @@ class MainWindow(QDialog):
         category = str(self.__ui.categorySelection.currentText())
         self.__lastSelectedCategory = category
 
-        for settingKey in sorted(self.__settings[category].keys(), key=lambda setKey: setKey[1:]):
+        for settingKey in sorted(list(self.__settings[category].keys()), key=lambda setKey: setKey[1:]):
             setting = self.__settings[category][settingKey]
             if "hidden" in setting.get("flags", []):
                 continue
@@ -358,26 +358,6 @@ class MainWindow(QDialog):
 
     def __sectionChanged(self,  sectionIdx):
         self.__updateTree()
-
-
-class MagicFile(file):
-    def __init__(self, filename, mode):
-        super(MagicFile, self).__init__(filename, mode)
-
-    def readline(self, size=-1):
-        temp = super(MagicFile, self).readline(size)
-        if len(temp) == 0:
-            return temp
-
-        esidx = temp.find('=')
-        # comment
-        if temp[0] == ';' or temp[0] == '#' or temp[0] == '[':
-            return temp
-        # no equals sign
-        if esidx == -1:
-            return "  " + temp
-        else:
-            return temp
 
 
 class IniEdit(mobase.IPluginTool):
@@ -411,7 +391,7 @@ class IniEdit(mobase.IPluginTool):
         return self.__tr("Plugin to allow easier customization of game settings")
 
     def version(self):
-        return mobase.VersionInfo(1, 0, 0, mobase.ReleaseType.final)
+        return mobase.VersionInfo(1, 1, 0, 0)
 
     def isActive(self):
         return True
@@ -452,13 +432,13 @@ class IniEdit(mobase.IPluginTool):
     def __filteredSettings(self):
         newSettings = CaselessDict()
         gameName = str(self.__organizer.managedGame().gameShortName())
-        
+
         iniFiles = self.__iniFiles()
 
-        for sectionKey in self.__settings.keys():
+        for sectionKey in list(self.__settings.keys()):
             section = self.__settings[sectionKey]
             filteredSection = CaselessDict()
-            for key,  setting in section.iteritems():
+            for key,  setting in section.items():
                 setting["value"] = setting["default"]
                 if iniFiles:
                     if "prefs" in setting.get("flags", []):
@@ -474,7 +454,7 @@ class IniEdit(mobase.IPluginTool):
         return newSettings
 
     def updateSettings(self, settings, fileName):
-        parser = ConfigParser.SafeConfigParser(allow_no_value=True)
+        parser = configparser.ConfigParser(allow_no_value=True)
         parser.optionxform = str
 
         profile = self.__organizer.profile()
@@ -486,8 +466,7 @@ class IniEdit(mobase.IPluginTool):
         filePath = base_path + "/" + fileName
         if not os.path.exists(filePath):
             return
-        cfgFile = MagicFile(filePath, 'r')
-        parser.readfp(cfgFile)
+        parser.read(filePath)
         for section in parser.sections():
             if section not in settings:
                 QtCore.qDebug(self.__tr("unexpected section {0} in {1}").format(section, fileName).encode('ascii','ignore'))
@@ -519,7 +498,7 @@ class IniEdit(mobase.IPluginTool):
                             value = float(value)
                         except ValueError:
                             value = float(int(value))
-                except ValueError, e:
+                except ValueError as e:
                     QMessageBox.warning(self.__window,  self.__tr("Invalid configuration file"),
                                     self.__tr("Your configuration files contains an invalid value: {0}={1} (in section {2}).\n").format(QString(setting[0]), QString(setting[1]), section)
                                     + self.__tr("Please note that the game probably won't report an error, it will just ignore this setting.\n")
@@ -532,7 +511,6 @@ class IniEdit(mobase.IPluginTool):
                 if "default" not in newData:
                     newData["default"] = value
                 settings[section][str(setting[0])] = newData
-        cfgFile.close()
 
     def __save(self,  settings):
         try:
@@ -547,20 +525,18 @@ class IniEdit(mobase.IPluginTool):
             for fileName in self.__iniFiles():
                 filePath = base_path + "/" + fileName
                 if os.path.exists(filePath):
-                    parser = ConfigParser.SafeConfigParser(allow_no_value=True)
+                    parser = configparser.ConfigParser(allow_no_value=True)
                     parser.optionxform = str
-                    cfgFile = MagicFile(filePath, 'r')
-                    parser.readfp(cfgFile)
+                    parser.read(filePath)
                     ini_files[fileName] = parser
-                    cfgFile.close()
             count = 0
-            for sectionkey, section in settings.iteritems():
+            for sectionkey, section in settings.items():
                 count += 1
-                for settingkey, setting in section.iteritems():
+                for settingkey, setting in section.items():
                     if setting["value"] != setting.get("saved",  setting["default"]):
                         try:
                             ini_files[setting["file"]].add_section(sectionkey)
-                        except ConfigParser.DuplicateSectionError:
+                        except configparser.DuplicateSectionError:
                             pass
 
                         if type(setting["value"]) == bool:
@@ -568,14 +544,14 @@ class IniEdit(mobase.IPluginTool):
                         else:
                             ini_files[setting["file"]].set(sectionkey,  settingkey,  str(setting["value"]))
                         setting["saved"] = setting["value"]
-            for fileName, data in ini_files.iteritems():
+            for fileName, data in ini_files.items():
                 filePath = base_path + "/" + fileName
                 if os.path.exists(filePath):
                     out = open(filePath, 'w')
                     data.write(out)
                     out.close()
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
 
     def display(self):
         settings = self.__filteredSettings()

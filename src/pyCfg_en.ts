@@ -8,56 +8,61 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="404"/>
+        <location filename="pyCfg.py" line="406"/>
         <source>Configurator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="407"/>
+        <location filename="pyCfg.py" line="409"/>
         <source>Modify game Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="473"/>
+        <location filename="pyCfg.py" line="475"/>
         <source>unexpected section {0} in {1}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="481"/>
+        <location filename="pyCfg.py" line="483"/>
         <source>unknown ini setting {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="486"/>
+        <location filename="pyCfg.py" line="488"/>
         <source>{0} in wrong ini file ({1}, should be {2})</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="503"/>
+        <location filename="pyCfg.py" line="505"/>
         <source>Invalid configuration file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="503"/>
+        <location filename="pyCfg.py" line="505"/>
         <source>Your configuration files contains an invalid value: {0}={1} (in section {2}).
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="503"/>
+        <location filename="pyCfg.py" line="505"/>
         <source>Please note that the game probably won&apos;t report an error, it will just ignore this setting.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="503"/>
+        <location filename="pyCfg.py" line="505"/>
         <source>Please note that even if someone told you to use this setting, that doesn&apos;t mean they know what they&apos;re talking about.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="503"/>
+        <location filename="pyCfg.py" line="505"/>
         <source>BUT, if you know for a fact this is a valid setting, then please contact me at sherb@gmx.net.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="pyCfg.py" line="402"/>
+        <source>Enable plugin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

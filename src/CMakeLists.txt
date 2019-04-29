@@ -5,7 +5,7 @@ FIND_PACKAGE(Qt5LinguistTools)
 INCLUDE(PyQt5TranslationMacros.cmake)
 PYQT5_CREATE_TRANSLATION(configurator_translations_qm ${CMAKE_SOURCE_DIR}/src ${CMAKE_SOURCE_DIR}/src/pyCfg_en.ts)
 
-SET(default_project_path "${CMAKE_SOURCE_DIR}/..")
+SET(default_project_path "${DEPENDENCIES_DIR}/modorganizer_super")
 GET_FILENAME_COMPONENT(${default_project_path} ${default_project_path} REALPATH)
 
 SET(project_path "${default_project_path}" CACHE PATH "path to the other mo projects")

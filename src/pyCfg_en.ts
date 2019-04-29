@@ -3,65 +3,65 @@
 <context>
     <name>IniEdit</name>
     <message>
-        <location filename="pyCfg.py" line="392"/>
+        <location filename="pyCfg.py" line="391"/>
         <source>Plugin to allow easier customization of game settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="406"/>
+        <location filename="pyCfg.py" line="405"/>
         <source>Configurator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="409"/>
+        <location filename="pyCfg.py" line="408"/>
         <source>Modify game Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="475"/>
+        <location filename="pyCfg.py" line="474"/>
         <source>unexpected section {0} in {1}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="483"/>
+        <location filename="pyCfg.py" line="482"/>
         <source>unknown ini setting {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="488"/>
+        <location filename="pyCfg.py" line="487"/>
         <source>{0} in wrong ini file ({1}, should be {2})</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="505"/>
+        <location filename="pyCfg.py" line="504"/>
         <source>Invalid configuration file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="505"/>
+        <location filename="pyCfg.py" line="504"/>
         <source>Your configuration files contains an invalid value: {0}={1} (in section {2}).
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="505"/>
+        <location filename="pyCfg.py" line="504"/>
         <source>Please note that the game probably won&apos;t report an error, it will just ignore this setting.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="505"/>
+        <location filename="pyCfg.py" line="504"/>
         <source>Please note that even if someone told you to use this setting, that doesn&apos;t mean they know what they&apos;re talking about.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="505"/>
+        <location filename="pyCfg.py" line="504"/>
         <source>BUT, if you know for a fact this is a valid setting, then please contact me at sherb@gmx.net.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="402"/>
+        <location filename="pyCfg.py" line="401"/>
         <source>Enable plugin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -69,42 +69,42 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="pyCfg.py" line="110"/>
+        <location filename="pyCfg.py" line="109"/>
         <source>Unsaved changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="110"/>
+        <location filename="pyCfg.py" line="109"/>
         <source>There are unsaved changes. Do you want to save before closing the dialog?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="126"/>
+        <location filename="pyCfg.py" line="125"/>
         <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="126"/>
+        <location filename="pyCfg.py" line="125"/>
         <source>Basic</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="216"/>
+        <location filename="pyCfg.py" line="215"/>
         <source>true</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="216"/>
+        <location filename="pyCfg.py" line="215"/>
         <source>false</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="302"/>
+        <location filename="pyCfg.py" line="301"/>
         <source>Color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="355"/>
+        <location filename="pyCfg.py" line="354"/>
         <source>Default: </source>
         <translation type="unfinished"></translation>
     </message>

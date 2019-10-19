@@ -13,6 +13,15 @@ build_script:
     cd c:\projects\modorganizer-umbrella
 
     C:\Python37-x64\python.exe unimake.py -d c:\projects\modorganizer-build -s Appveyor_Build=True %APPVEYOR_PROJECT_NAME%
+artifacts:
+  - path: src\pyCfg.py
+    name: tool_configurator_main_py
+  - path: src\pyCfg_en.ts
+    name: tool_configurator_translation_file
+  - path: build\src\pyCfgDialog.py
+    name: tool_configurator_dialog_py
+  - path: build\src\pyCfgResource_rc.py
+    name: tool_configurator_resource_py
 on_success:
   - ps: Set-Location -Path $env:APPVEYOR_BUILD_FOLDER
   - ps: Invoke-RestMethod https://raw.githubusercontent.com/DiscordHooks/appveyor-discord-webhook/master/send.ps1 -o send.ps1
@@ -23,5 +32,3 @@ on_failure:
   - ps: Push-AppveyorArtifact ${env:APPVEYOR_BUILD_FOLDER}\stderr.log
   - ps: Invoke-RestMethod https://raw.githubusercontent.com/DiscordHooks/appveyor-discord-webhook/master/send.ps1 -o send.ps1
   - ps: ./send.ps1 failure $env:WEBHOOK_URL
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))

@@ -1,15 +1,8 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.16)
 
-ADD_COMPILE_OPTIONS($<$<CXX_COMPILER_ID:MSVC>:/MP> $<$<CXX_COMPILER_ID:MSVC>:$<$<CONFIG:RELEASE>:/O2>> $<$<CXX_COMPILER_ID:MSVC>:$<$<CONFIG:RELWITHDEBINFO>:/O2>>)
+project(tool_configurator LANGUAGES NONE)
+set(project_type python_plugin)
+set(enable_warnings OFF)
 
-SET(PROJ_NAME tool_configurator LANGUAGES NONE)
-
-PROJECT(${PROJ_NAME})
-
-SET(DEPENDENCIES_DIR CACHE PATH "")
-
-LIST(APPEND CMAKE_PREFIX_PATH ${QT_ROOT}/lib/cmake)
-
-MESSAGE(${PYTHON_ROOT})
-
-ADD_SUBDIRECTORY(src)
+include(../cmake_common/project.cmake)
+add_subdirectory(src)

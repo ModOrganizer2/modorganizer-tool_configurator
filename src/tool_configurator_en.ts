@@ -8,6 +8,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="pyCfg.py" line="401"/>
+        <source>Enable plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="pyCfg.py" line="405"/>
         <source>Configurator</source>
         <translation type="unfinished"></translation>
@@ -58,11 +63,6 @@
     <message>
         <location filename="pyCfg.py" line="504"/>
         <source>BUT, if you know for a fact this is a valid setting, then please contact me at sherb@gmx.net.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="pyCfg.py" line="401"/>
-        <source>Enable plugin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

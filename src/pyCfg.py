@@ -393,13 +393,8 @@ class IniEdit(mobase.IPluginTool):
     def version(self):
         return mobase.VersionInfo(1, 2, 0, 0)
 
-    def isActive(self):
-        return self.__organizer.pluginSetting(self.name(), "enabled") is True
-
     def settings(self):
-        return [
-          mobase.PluginSetting("enabled", self.__tr("Enable plugin"), False)
-          ]
+        return []
 
     def displayName(self):
         return self.__tr("Configurator")

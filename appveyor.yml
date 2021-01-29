@@ -26,9 +26,9 @@ artifacts:
     name: tool_configurator_main_py
   - path: src\pyCfg_en.ts
     name: tool_configurator_translation_file
-  - path: build\src\pyCfgDialog.py
+  - path: vsbuild\src\RelWithDebInfo\pyCfgDialog.py
     name: tool_configurator_dialog_py
-  - path: build\src\pyCfgResource_rc.py
+  - path: vsbuild\src\RelWithDebInfo\pyCfgResource_rc.py
     name: tool_configurator_resource_py
 on_success:
   - ps: Set-Location -Path $env:APPVEYOR_BUILD_FOLDER

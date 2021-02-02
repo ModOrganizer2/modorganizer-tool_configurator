@@ -8,60 +8,55 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="401"/>
-        <source>Enable plugin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="pyCfg.py" line="405"/>
+        <location filename="pyCfg.py" line="400"/>
         <source>Configurator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="408"/>
+        <location filename="pyCfg.py" line="403"/>
         <source>Modify game Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="474"/>
+        <location filename="pyCfg.py" line="469"/>
         <source>unexpected section {0} in {1}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="482"/>
+        <location filename="pyCfg.py" line="477"/>
         <source>unknown ini setting {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="487"/>
+        <location filename="pyCfg.py" line="482"/>
         <source>{0} in wrong ini file ({1}, should be {2})</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="504"/>
+        <location filename="pyCfg.py" line="499"/>
         <source>Invalid configuration file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="504"/>
+        <location filename="pyCfg.py" line="499"/>
         <source>Your configuration files contains an invalid value: {0}={1} (in section {2}).
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="504"/>
+        <location filename="pyCfg.py" line="499"/>
         <source>Please note that the game probably won&apos;t report an error, it will just ignore this setting.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="504"/>
+        <location filename="pyCfg.py" line="499"/>
         <source>Please note that even if someone told you to use this setting, that doesn&apos;t mean they know what they&apos;re talking about.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="pyCfg.py" line="504"/>
+        <location filename="pyCfg.py" line="499"/>
         <source>BUT, if you know for a fact this is a valid setting, then please contact me at sherb@gmx.net.</source>
         <translation type="unfinished"></translation>
     </message>

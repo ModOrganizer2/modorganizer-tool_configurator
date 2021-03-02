@@ -391,10 +391,13 @@ class IniEdit(mobase.IPluginTool):
         return self.__tr("Plugin to allow easier customization of game settings")
 
     def version(self):
-        return mobase.VersionInfo(1, 2, 0, 0)
+        return mobase.VersionInfo(1, 3, 0, 0)
 
     def settings(self):
         return []
+
+    def enabledByDefault(self):
+        return False
 
     def displayName(self):
         return self.__tr("Configurator")

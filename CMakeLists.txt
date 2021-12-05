@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(pyCfg LANGUAGES NONE)
+project(pyCfg LANGUAGES CXX)
 set(project_type python_plugin)
 set(enable_warnings OFF)
 

@@ -4,10 +4,10 @@ import json
 import configparser
 
 # qt5
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt, QCoreApplication, pyqtSlot, pyqtSignal
-from PyQt5.QtGui import QColor, QPalette
-from PyQt5.QtWidgets import QDialog, QHeaderView, QMessageBox, QColorDialog, QTreeWidgetItem,\
+from PyQt6 import QtCore, QtGui, QtWidgets
+from PyQt6.QtCore import Qt, QCoreApplication, pyqtSlot, pyqtSignal
+from PyQt6.QtGui import QColor, QPalette
+from PyQt6.QtWidgets import QDialog, QHeaderView, QMessageBox, QColorDialog, QTreeWidgetItem,\
     QComboBox, QPushButton, QDoubleSpinBox, QHBoxLayout, QWidget, QSlider, QSpinBox, QLineEdit
 
 if "mobase" not in sys.modules:
@@ -89,14 +89,14 @@ class MainWindow(QDialog):
         self.__ui = Ui_PyCfgDialog()
         self.__ui.setupUi(self)
 
-        self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowType.WindowContextHelpButtonHint)
 
         self.__updateCategories()
         self.__ui.categorySelection.currentIndexChanged[int].connect(self.__sectionChanged)
         self.__ui.advancedButton.clicked.connect(self.__advancedClicked)
         self.__ui.saveButton.clicked.connect(self.__save)
-        self.__ui.settingsTree.header().setSectionResizeMode(0, QHeaderView.Interactive)
-        self.__ui.settingsTree.header().setSectionResizeMode(1, QHeaderView.Stretch)
+        self.__ui.settingsTree.header().setSectionResizeMode(0, QHeaderView.ResizeMode.Interactive)
+        self.__ui.settingsTree.header().setSectionResizeMode(1, QHeaderView.ResizeMode.Stretch)
 
         self.__lastSelectedCategory = ""
         self.__ui.closeButton.clicked.connect(self.close)
@@ -108,11 +108,11 @@ class MainWindow(QDialog):
         if self.__ui.saveButton.isEnabled():
             res = QMessageBox.question(self,  self.__tr("Unsaved changes"),
                                        self.__tr("There are unsaved changes. Do you want to save before closing the dialog?"),
-                                       QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
-                                       QMessageBox.Cancel)
-            if res == QMessageBox.Save:
+                                       QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel,
+                                       QMessageBox.StandardButton.Cancel)
+            if res == QMessageBox.StandardButton.Save:
                 self.__save()
-            elif res == QMessageBox.Cancel:
+            elif res == QMessageBox.StandardButton.Cancel:
                 event.ignore()
         else:
             super(MainWindow,  self).closeEvent(event)
@@ -137,7 +137,7 @@ class MainWindow(QDialog):
             itemName = sender.property("key")
         setting = self.__settings[section][str(itemName)]
         setting["value"] = value
-        matches = self.__ui.settingsTree.findItems(itemName,  QtCore.Qt.MatchExactly)
+        matches = self.__ui.settingsTree.findItems(itemName,  QtCore.Qt.MatchFlag.MatchExactly)
         item = matches[0]
         self.__updateIcon(item)
 
@@ -145,10 +145,10 @@ class MainWindow(QDialog):
         setting = self.__settings[self.__lastSelectedCategory][str(item.text(0))]
         saved = setting.get("saved",  setting["default"])
         if  saved != setting["value"]:
-            item.setIcon(0, QtGui.QIcon(":/pyCfg/modified"))
+            item.setIcon(0, QtGui.QIcon("pyCfg:not-synchronized.png"))
             self.__ui.saveButton.setEnabled(True)
         else:
-            item.setIcon(0, QtGui.QIcon(":/pyCfg/empty"))
+            item.setIcon(0, QtGui.QIcon("pyCfg:empty.png"))
 
     def __valueChangedIndex(self,  value):
         # odd problem: can't connect to the slot with text-parameter
@@ -173,9 +173,9 @@ class MainWindow(QDialog):
                 self.__ui.categorySelection.addItem(cat)
 
     def __rgbClicked(self):
-        col = QColorDialog.getColor(self.sender().palette().color(QPalette.ButtonText))
+        col = QColorDialog.getColor(self.sender().palette().color(QPalette.ColorRole.ButtonText))
         palette = self.sender().palette()
-        palette.setColor(QPalette.ButtonText,  col)
+        palette.setColor(QPalette.ColorRole.ButtonText,  col)
         colStr = str(col.red()) + "," + str(col.green()) + "," + str(col.blue())
         self.__valueChanged(self.sender(),  colStr) # xxx
         self.sender().setPalette(palette)
@@ -184,11 +184,11 @@ class MainWindow(QDialog):
         if self.sender().isChecked():
             self.sender().setText(self.__tr("true"))
             self.__valueChanged(self.sender(),  True)
-            self.sender().setIcon(QtGui.QIcon(":/pyCfg/true"))
+            self.sender().setIcon(QtGui.QIcon("pyCfg:true.png"))
         else:
             self.sender().setText(self.__tr("false"))
             self.__valueChanged(self.sender(),  False)
-            self.sender().setIcon(QtGui.QIcon(":/pyCfg/false"))
+            self.sender().setIcon(QtGui.QIcon("pyCfg:false.png"))
 
     # qt5
     def __editBoxChanged(self):
@@ -216,7 +216,7 @@ class MainWindow(QDialog):
         enableBtn.setProperty("key",  key)
         enableBtn.setCheckable(True)
         enableBtn.setChecked(setting["value"])
-        enableBtn.setIcon(QtGui.QIcon(":/pyCfg/true") if setting["value"] else QtGui.QIcon(":/pyCfg/false"))
+        enableBtn.setIcon(QtGui.QIcon("pyCfg:true.png") if setting["value"] else QtGui.QIcon("pyCfg:false.png"))
         self.__ui.settingsTree.setItemWidget(newItem,  1, enableBtn)
         enableBtn.clicked.connect(self.__boolClicked)
         return newItem
@@ -239,7 +239,7 @@ class MainWindow(QDialog):
             newWidget = QWidget(self.__ui.settingsTree)
             layout = QHBoxLayout(newWidget)
             layout.setStretch(2,  1)
-            slider = QSlider(Qt.Horizontal,  newWidget)
+            slider = QSlider(Qt.Orientation.Horizontal,  newWidget)
             spin = QSpinBox(self.__ui.settingsTree)
             slider.setProperty("key",  key)
             slider.setRange(range["lower"],  range["upper"])
@@ -263,7 +263,7 @@ class MainWindow(QDialog):
             newWidget = self.__genSlider(setting["range"],  setting.get("step",  1),  str(key),  setting["value"])
         else:
             newWidget = QSpinBox(self.__ui.settingsTree)
-            newWidget.setRange(-sys.maxsize,  sys.maxsize)
+            newWidget.setRange(-2147483648,  2147483647)
             newWidget.setSingleStep(setting.get("step",  1))
             newWidget.setProperty("key",  key)
             newWidget.setValue(setting["value"])
@@ -305,7 +305,7 @@ class MainWindow(QDialog):
             rgb = [int(col) for col in str(setting["value"]).split(",")]
         color = QColor(rgb[0],  rgb[1],  rgb[2])
         palette = colorBtn.palette()
-        palette.setColor(QPalette.ButtonText,  color)
+        palette.setColor(QPalette.ColorRole.ButtonText,  color)
         colorBtn.setPalette(palette)
         font = colorBtn.font()
         font.setBold(True)
@@ -370,13 +370,13 @@ class IniEdit(mobase.IPluginTool):
         self.__parentWidget = None
 
     def init(self, organizer):
-        import pyCfgResource_rc  # required to make icons available
         self.__organizer = organizer
         self.__window = None
         try:
             f = open(organizer.pluginDataPath() + "/settings.json", "r")
         except IOError:
             return False
+        QtCore.QDir.addSearchPath("pyCfg", self.__organizer.pluginDataPath() + "/res/")
         self.__settings = json.loads(f.read())
         f.close()
         return True
@@ -406,7 +406,7 @@ class IniEdit(mobase.IPluginTool):
         return self.__tr("Modify game Configuration")
 
     def icon(self):
-        return QtGui.QIcon(":/pyCfg/pycfgicon")
+        return QtGui.QIcon("pyCfg:preferences-desktop.png")
 
     def setParentWidget(self, widget):
         self.__parentWidget = widget
@@ -500,7 +500,7 @@ class IniEdit(mobase.IPluginTool):
                             value = float(int(value))
                 except ValueError as e:
                     QMessageBox.warning(self.__window,  self.__tr("Invalid configuration file"),
-                                    self.__tr("Your configuration files contains an invalid value: {0}={1} (in section {2}).\n").format(QString(setting[0]), QString(setting[1]), section)
+                                    self.__tr("Your configuration files contains an invalid value: {0}={1} (in section {2}).\n").format(setting[0], setting[1], section)
                                     + self.__tr("Please note that the game probably won't report an error, it will just ignore this setting.\n")
                                     + self.__tr("Please note that even if someone told you to use this setting, that doesn't mean they know what they're talking about.\n")
                                     + self.__tr("BUT, if you know for a fact this is a valid setting, then please contact me at sherb@gmx.net."))
@@ -560,7 +560,7 @@ class IniEdit(mobase.IPluginTool):
 
         self.__window = MainWindow(settings)
         self.__window.saveSettings.connect(self.__save)
-        self.__window.exec_()
+        self.__window.exec()
 
 def createPlugin():
         return IniEdit()

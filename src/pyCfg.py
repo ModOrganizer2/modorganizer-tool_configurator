@@ -101,13 +101,13 @@ class MainWindow(QDialog):
         self.__lastSelectedCategory = ""
         self.__ui.closeButton.clicked.connect(self.close)
 
-    def __tr(self, str):
+    def tr(self, str):
         return QCoreApplication.translate("MainWindow", str)
 
     def closeEvent(self,  event):
         if self.__ui.saveButton.isEnabled():
-            res = QMessageBox.question(self,  self.__tr("Unsaved changes"),
-                                       self.__tr("There are unsaved changes. Do you want to save before closing the dialog?"),
+            res = QMessageBox.question(self,  self.tr("Unsaved changes"),
+                                       self.tr("There are unsaved changes. Do you want to save before closing the dialog?"),
                                        QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel,
                                        QMessageBox.StandardButton.Cancel)
             if res == QMessageBox.StandardButton.Save:
@@ -122,7 +122,7 @@ class MainWindow(QDialog):
         self.__ui.saveButton.setEnabled(False)
 
     def __advancedClicked(self):
-        self.sender().setText(self.__tr("Advanced") if self.sender().isChecked() else self.__tr("Basic"))
+        self.sender().setText(self.tr("Advanced") if self.sender().isChecked() else self.tr("Basic"))
         self.__updateCategories()
         newIdx = self.__ui.categorySelection.findText(self.__lastSelectedCategory)
         if newIdx != -1:
@@ -182,11 +182,11 @@ class MainWindow(QDialog):
 
     def __boolClicked(self):
         if self.sender().isChecked():
-            self.sender().setText(self.__tr("true"))
+            self.sender().setText(self.tr("true"))
             self.__valueChanged(self.sender(),  True)
             self.sender().setIcon(QtGui.QIcon("pyCfg:true.png"))
         else:
-            self.sender().setText(self.__tr("false"))
+            self.sender().setText(self.tr("false"))
             self.__valueChanged(self.sender(),  False)
             self.sender().setIcon(QtGui.QIcon("pyCfg:false.png"))
 
@@ -212,7 +212,7 @@ class MainWindow(QDialog):
 
     def __genBooleanEntry(self,  key,  setting):
         newItem = QTreeWidgetItem(self.__ui.settingsTree, [key])
-        enableBtn = QPushButton(self.__tr("true") if setting["value"] else self.__tr("false"),  self.__ui.settingsTree)
+        enableBtn = QPushButton(self.tr("true") if setting["value"] else self.tr("false"),  self.__ui.settingsTree)
         enableBtn.setProperty("key",  key)
         enableBtn.setCheckable(True)
         enableBtn.setChecked(setting["value"])
@@ -298,7 +298,7 @@ class MainWindow(QDialog):
 
     def __genColorEntry(self,  key,  setting):
         newItem = QTreeWidgetItem(self.__ui.settingsTree, [key])
-        colorBtn = QPushButton(self.__tr("Color"),  self.__ui.settingsTree)
+        colorBtn = QPushButton(self.tr("Color"),  self.__ui.settingsTree)
         if setting["value"] == "":
             rgb = [0,  0,  0]
         else:
@@ -349,9 +349,9 @@ class MainWindow(QDialog):
             newItem = self.__addSetting(settingKey,  setting)
             self.__updateIcon(newItem)
             if "description" in setting:
-                newItem.setToolTip(0, str(self.__tr(setting["description"])))
+                newItem.setToolTip(0, str(self.tr(setting["description"])))
             if "default" in setting:
-                newItem.setToolTip(1, self.__tr("Default: ") + str(setting["default"]))
+                newItem.setToolTip(1, self.tr("Default: ") + str(setting["default"]))
             self.__ui.settingsTree.addTopLevelItem(newItem)
 
         self.__ui.settingsTree.resizeColumnToContents(0)
@@ -388,7 +388,7 @@ class IniEdit(mobase.IPluginTool):
         return "Tannin"
 
     def description(self):
-        return self.__tr("Plugin to allow easier customization of game settings")
+        return self.tr("Plugin to allow easier customization of game settings")
 
     def version(self):
         return mobase.VersionInfo(1, 3, 0, 0)
@@ -400,10 +400,10 @@ class IniEdit(mobase.IPluginTool):
         return False
 
     def displayName(self):
-        return self.__tr("Configurator")
+        return self.tr("Configurator")
 
     def tooltip(self):
-        return self.__tr("Modify game Configuration")
+        return self.tr("Modify game Configuration")
 
     def icon(self):
         return QtGui.QIcon("pyCfg:preferences-desktop.png")
@@ -411,7 +411,7 @@ class IniEdit(mobase.IPluginTool):
     def setParentWidget(self, widget):
         self.__parentWidget = widget
 
-    def __tr(self, str):
+    def tr(self, str):
         return QCoreApplication.translate("IniEdit", str)
 
     def __iniFiles(self):
@@ -469,7 +469,7 @@ class IniEdit(mobase.IPluginTool):
         parser.read(filePath)
         for section in parser.sections():
             if section not in settings:
-                QtCore.qDebug(self.__tr("unexpected section {0} in {1}").format(section, fileName).encode('ascii','ignore'))
+                QtCore.qDebug(self.tr("unexpected section {0} in {1}").format(section, fileName).encode('ascii','ignore'))
                 continue
             else:
                 settings.updateKey(section)
@@ -477,12 +477,12 @@ class IniEdit(mobase.IPluginTool):
             for setting in parser.items(section, True):
                 # test if the setting is allowed in this file
                 if setting[0].lower() not in settings[section]:
-                    QtCore.qDebug(self.__tr("unknown ini setting {0}").format(setting[0]).encode('ascii','ignore'))
+                    QtCore.qDebug(self.tr("unknown ini setting {0}").format(setting[0]).encode('ascii','ignore'))
                     continue
 
                 if "both" not in settings[section][setting[0]].get("flags", [])\
                         and fileName.lower() != settings[section][setting[0]]["file"].lower():
-                    QtCore.qDebug(self.__tr("{0} in wrong ini file ({1}, should be {2})").format(
+                    QtCore.qDebug(self.tr("{0} in wrong ini file ({1}, should be {2})").format(
                         setting[0], fileName, settings[section][setting[0]]["file"]).encode('ascii','ignore'))
                     continue
 
@@ -499,11 +499,11 @@ class IniEdit(mobase.IPluginTool):
                         except ValueError:
                             value = float(int(value))
                 except ValueError as e:
-                    QMessageBox.warning(self.__window,  self.__tr("Invalid configuration file"),
-                                    self.__tr("Your configuration files contains an invalid value: {0}={1} (in section {2}).\n").format(setting[0], setting[1], section)
-                                    + self.__tr("Please note that the game probably won't report an error, it will just ignore this setting.\n")
-                                    + self.__tr("Please note that even if someone told you to use this setting, that doesn't mean they know what they're talking about.\n")
-                                    + self.__tr("BUT, if you know for a fact this is a valid setting, then please contact me at sherb@gmx.net."))
+                    QMessageBox.warning(self.__window,  self.tr("Invalid configuration file"),
+                                    self.tr("Your configuration files contains an invalid value: {0}={1} (in section {2}).\n").format(setting[0], setting[1], section)
+                                    + self.tr("Please note that the game probably won't report an error, it will just ignore this setting.\n")
+                                    + self.tr("Please note that even if someone told you to use this setting, that doesn't mean they know what they're talking about.\n")
+                                    + self.tr("BUT, if you know for a fact this is a valid setting, then please contact me at sherb@gmx.net."))
                 newData["value"] = value
                 newData["saved"] = value
                 if "file" not in newData:
